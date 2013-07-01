@@ -1,0 +1,64 @@
+Problem Statement
+    
+    In documents, it is frequently necessary to write monetary amounts in a standard format. We have 
+    decided to format amounts as follows:
+        the amount must start with '$'
+        the amount should have a leading '0' if and only if it is less then 1 dollar.
+        the amount must end with a decimal point and exactly 2 following digits.
+        the digits to the left of the decimal point must be separated into groups of three by commas 
+        (a group of one or two digits may appear on the left).
+    Create a class FormatAmt that contains a method amount that takes two int's, dollars and cents, 
+    as inputs and returns the properly formatted String.
+    
+    
+123456
+0
+Returns: "$123,456.00"
+Note that there is no space between the $ and the first digit.
+
+49734321
+9
+Returns: "$49,734,321.09"
+
+0
+99
+Returns: "$0.99"
+Note the leading 0.
+
+
+public class FormatAmt {
+public static String amount(int dollars, int cents) {
+		StringBuilder sb = new StringBuilder();
+		if (dollars == 0) {
+			sb = sb.append("$0.");
+			if (cents == 0) {
+				sb = sb.append("00");
+			} else {
+				sb = sb.append(String.valueOf(cents));
+			}
+			return sb.toString();
+		}
+		
+		String str = String.valueOf(dollars);
+		int pos = 3;
+		
+		for (int i=str.length()-1; i>=0; i--) {	
+			sb = sb.insert(0, str.charAt(i));
+			pos--;
+			if (pos == 0 && i!=0) {
+				sb = sb.insert(0, ',');
+				pos = 3;
+			}
+		}
+		
+		sb = sb.insert(0, '$');
+		sb = sb.append('.');
+		if (cents == 0)
+			sb = sb.append("00");
+		else
+			sb = sb.append(String.valueOf(cents));
+		
+		return sb.toString();
+	}
+
+}

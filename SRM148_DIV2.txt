@@ -1,0 +1,39 @@
+Problem Statement
+    
+    Create a class DivisorDigits containing a method howMany which takes an int number and returns 
+    how many digits in number divide evenly into number itself.
+    
+    
+52527
+Returns: 0
+52527 is not divisible by 5, 2, or 7.
+
+730000000
+Returns: 0
+Nothing is divisible by 0. In this case, the number is also not divisible by 7 or 3.
+
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class DivisorDigits {
+	public static int howMany(int number) {
+		String num = Integer.toString(number);
+		Set<Character> set = new HashSet<Character>();
+		int count = 0;
+		
+		for (char c : num.toCharArray()) {
+			if (!set.contains(c) && c != '0') {
+				set.add(c);
+			}
+		}
+		
+		for (char c : set) {
+			if (number % Character.getNumericValue(c) == 0) {
+				count ++;
+			}
+		}
+		
+		return count;
+	}
+}

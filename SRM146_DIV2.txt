@@ -1,0 +1,57 @@
+Problem Statement
+    
+    This task is about the scoring in the first phase of the die-game Yahtzee, where five dice are 
+    used. The score is determined by the values on the upward die faces after a roll. The player gets 
+    to choose a value, and all dice that show the chosen value are considered active. The score is 
+    simply the sum of values on active dice.
+    Say, for instance, that a player ends up with the die faces showing 2, 2, 3, 5 and 4. Choosing 
+    the value two makes the dice showing 2 active and yields a score of 2 + 2 = 4, while choosing 5 
+    makes the one die showing 5 active, yielding a score of 5.
+    Your method will take as input a int[] toss, where each element represents the upward face of a 
+    die, and return the maximum possible score with these values.
+    
+    
+{ 2, 2, 3, 5, 4 }
+Returns: 5
+The example from the text.
+
+
+{ 6, 4, 1, 1, 3 }
+Returns: 6
+Selecting 1 as active yields 1 + 1 = 2, selecting 3 yields 3, selecting 4 yields 4 and selecting 
+6 yields 6, which is the maximum number of points.
+
+{ 5, 3, 5, 3, 3 }
+Returns: 10
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class YahtzeeScore {
+	public static int maxPoints(int[] toss) {
+		int highest = 0;
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		map.put(1, 0);
+		map.put(2, 0);
+		map.put(3, 0);
+		map.put(4, 0);
+		map.put(5, 0);
+		map.put(6, 0);
+		
+		for (int j : toss) {
+			int k = map.get(j);
+			k += j;
+			map.put(j, k);
+		}
+		
+		for (int j : map.keySet()) {
+			int k = map.get(j);
+			if (k > highest) {
+				highest = k;
+			}
+		}
+		
+		return highest;
+	}
+
+}
