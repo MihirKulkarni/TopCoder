@@ -1,0 +1,105 @@
+Problem Statement
+    
+    In basketball, players can attempt either two point or three point field goals, and if they are 
+    fouled, they can also attempt one point free throws. Since missing a free throw or a field goal 
+    often results in losing possession of the ball, it is important to make the most of each shot 
+    attempt. Traditionally, this efficiency has been measured by shooting percentage, which is defined as: 
+                            Field goals made
+   Shooting percentage = ---------------------
+                         Field goals attempted
+
+    Unfortunately, this formula is problematic since it does not account for either free throws or 
+    the different types of field goals. Therefore, a new formula, called points per shot, is gaining 
+    prominence. This is given by: 
+                                         Total points
+   Points per shot = -----------------------------------------------------
+                     (Field goals attempted) + 0.5*(Free throws attempted)
+    
+   Consider, for example, a player that makes 4 of 5 two point field goals, 3 of 7 three point field 
+   goals, and 7 of 9 free throws. The player has earned 4*2 + 3*3 + 7*1 = 24 points with 5+7=12 field 
+   goal attempts and 9 free throw attempts. Thus, the player has earned 24/16.5 = 1.45454545... points per shot.
+
+    Create a class ScoringEfficiency that contains a method getPointsPerShot, which is given a String[] 
+    gameLog. This will give the history of one player's shot attempts, with each element being equal 
+    to one of the following strings (quotes for clarity):
+    - "Made 2 point field goal"
+    - "Missed 2 point field goal"
+    - "Made 3 point field goal"
+    - "Missed 3 point field goal"
+    - "Made free throw"
+    - "Missed free throw"
+    Given this history, the method should return the player's points per shot, as computed above.
+    
+        
+{"Made 3 point field goal",
+ "Missed 2 point field goal"}
+Returns: 1.5
+This player has 3 total points, 2 field goals attempted, and 0 free throws attempted, so he has 
+earned 3/2 = 1.5 points per shot.    
+
+{"Made free throw",
+ "Missed free throw",
+ "Missed free throw",
+ "Missed free throw",
+ "Made free throw"}
+Returns: 0.8
+This player has 2 total points, 0 field goals attempted, and 5 free throws attempted, so he has earned 
+2/2.5 = 0.8 points per shot.
+
+{"Made 2 point field goal", "Made 2 point field goal", "Made 2 point field goal", 
+ "Made 2 point field goal", "Missed 2 point field goal",
+ "Made 3 point field goal", "Made 3 point field goal", "Made 3 point field goal",
+ "Missed 3 point field goal", "Missed 3 point field goal", 
+ "Missed 3 point field goal", "Missed 3 point field goal",
+ "Made free throw", "Made free throw", "Made free throw", 
+ "Made free throw", "Made free throw", "Made free throw", 
+ "Made free throw", "Missed free throw", "Missed free throw"}
+Returns: 1.4545454545454546
+This is the example from the problem statement.
+
+{"Made 2 point field goal", "Missed free throw",
+ "Made free throw", "Missed free throw", "Made free throw", 
+ "Made 2 point field goal", "Made 2 point field goal",
+ "Missed 2 point field goal", "Missed 2 point field goal",
+ "Made 3 point field goal", "Missed 2 point field goal",
+ "Made 2 point field goal", "Missed 2 point field goal",
+ "Made 3 point field goal", "Missed 2 point field goal",
+ "Missed 2 point field goal", "Missed 3 point field goal",
+ "Made free throw", "Made free throw", 
+ "Missed 3 point field goal", "Missed 2 point field goal",
+ "Missed 2 point field goal", "Made 2 point field goal",
+ "Missed 2 point field goal", "Made 2 point field goal",
+ "Missed 3 point field goal"}
+ 
+Returns: 0.9565217391304348
+
+
+public class ScoringEfficiency {
+	public static double getPointsPerShot(String[] gameLog) {
+		double fieldGoals = 0;
+		double freeThrows = 0;
+		double totalPoints = 0;
+		
+		for (String log : gameLog) {
+			if (log.contains("Made")) {
+				if (log.contains("free")){
+					freeThrows++;
+					totalPoints++;
+				} else if (log.contains("2")) {
+					totalPoints += 2;
+					fieldGoals++;
+				} else {
+					totalPoints += 3;
+					fieldGoals++;
+				}
+			} else {
+				if (log.contains("free")){
+					freeThrows++;
+				} else {
+					fieldGoals++;
+				}
+			}
+		}
+		return totalPoints / (fieldGoals  + (0.5 * freeThrows));
+	}
+}

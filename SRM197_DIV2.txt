@@ -1,0 +1,70 @@
+Problem Statement
+    
+    Our garden is a square containing plants in n rows and n columns, a total of n*n plants. The 
+    distance between plants within a row is rowDist and between plants within a column is colDist.
+
+    I want to water the garden without getting my shoes muddy. That requires that I stand outside 
+    the garden, never closer than where the next row or column of the garden would be if it were 
+    enlarged. The hose can water plants that are hoseDist or less away from where I am standing. (Of 
+    course, I can move around and water from various locations.)
+
+    Create a class GardenHose that contains the method countDead that takes n, rowDist, colDist, and 
+    hoseDist as inputs and returns the number of plants that cannot be watered.
+    
+3
+2
+1
+2
+Returns: 0
+In the picture below, each plant is shown with a P, and the closest spots where I can stand without 
+getting muddy shoes are shown with o. Even the center plant can be watered by standing at the end of 
+its column.
+
+     0  1  2  3  4  5  6  7  8
+ 0   ooooooooooooooooooooooooo
+     o  |  |  |  |  |  |  |  o
+ 1   o--+--P--+--P--+--P--+--o
+     o  |  |  |  |  |  |  |  o
+ 2   o--+--P--+--P--+--P--+--o
+     o  |  |  |  |  |  |  |  o
+ 3   o--+--P--+--P--+--P--+--o
+     o  |  |  |  |  |  |  |  o
+ 4   ooooooooooooooooooooooooo
+ 
+3
+2
+1
+1
+Returns: 3
+(Same picture) Now the hose cannot reach any of the plants in the middle row.
+
+6
+2
+5
+3
+Returns: 24
+
+50
+50
+50
+49
+Returns: 2500
+
+
+public class GardenHose {
+	public static int countDead(int n, int rowDist, int colDist, int hoseDist) {
+		int cnt = n * n;
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				int h1 = (j + 1) * rowDist;
+				int h2 = (n - j) * rowDist;
+				int v1 = (i + 1) * colDist;
+				int v2 = (n - i) * colDist;
+				if ( h1 <= hoseDist || h2 <= hoseDist || v1 <=hoseDist || v2 <= hoseDist)
+					cnt--;
+			}
+		}
+		return cnt;
+	}
+}     

@@ -1,0 +1,62 @@
+Problem Statement
+    
+    Often, when we round a real valued number to an integer, we round up if the fractional part is 
+    0.5 or greater, and down if the fractional part is less than 0.5. In this problem, you are to 
+    write a method round, which takes a real valued number as a String, num, and a cutoff as a String, 
+    cutoff. cutoff will be formatted exactly as "0.####", where each '#' represents a digit ('0'-'9'). 
+    At least one of the digits to the right of the decimal point in cutoff will be non-zero. Your 
+    task is to round num up if its fractional part is greater than cutoff, and down otherwise, and 
+    return the result as an int. To avoid issues with double imprecision, the fractional part of num 
+    will not be exactly equal to cutoff  Hence, the traditional rounding method described in the 
+    opening sentence would be represented by cutoff = "0.5000"
+    
+    
+".001"
+"0.0001"
+Returns: 1
+A very low cutoff.
+
+"0.00010001"
+"0.0001"
+Returns: 1
+
+"135"
+"0.6531"
+Returns: 135
+
+"135."
+"0.6531"
+Returns: 135
+
+
+public class CutoffRounder {
+	public static int round(String num, String cutoff) {
+		String[] a1 = new String[2];
+		String[] a2 = new String[2];
+
+		a1 = num.split("\\.");
+		a2 = cutoff.split("\\.");
+
+		if (a1[0].length() == 0)
+			a1[0] = "0" + a1[0];
+
+		if (a1.length == 1)
+			a1 = new String[]{a1[0], "0"};
+
+		if (Integer.parseInt(a1[1]) == 0 || a1[1].length() == 0)
+			return Integer.parseInt(a1[0]);
+
+		if (a1[1].length() == a2[1].length()) {
+			return Integer.parseInt(a1[1]) > Integer.parseInt(a2[1]) ? Integer
+					.parseInt(a1[0]) + 1 : Integer.parseInt(a1[0]);
+		} else if (a1[1].length() > a2[1].length()) {
+			String temp = a1[1].substring(0, a2[1].length());
+			return Integer.parseInt(temp) < Integer.parseInt(a2[1]) ? Integer
+					.parseInt(a1[0]) : Integer.parseInt(a1[0]) + 1;
+		} else {
+			String temp = a2[1].substring(0, a1[1].length());
+			return Integer.parseInt(temp) > Integer.parseInt(a1[1]) ? Integer
+					.parseInt(a1[0]) : Integer.parseInt(a1[0]) + 1;
+		}
+	}
+}

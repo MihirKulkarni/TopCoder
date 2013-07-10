@@ -1,0 +1,81 @@
+Problem Statement
+    
+    Even students who hate math find one calculation very useful -- what is the lowest score I can 
+    get on the last test and pull out a certain grade? Let's write a program to help them minimize 
+    their education.
+    We will assume that an average score of 90 or higher is rewarded with an A grade, 80 or higher 
+    (but less than 90) is a B, 70 or higher (but less than 80) is a C, 60 or higher (but less than 70) 
+    is a D. All test scores are integers between 0 and 100 inclusive and the average is NOT rounded 
+    -- for example an average of 89.99 does NOT get you an A.
+    Create a class Education that contains a method minimize that is given a String desire indicating 
+    the desired grade and a int[] tests containing the scores on all but the final test. The method 
+    returns the lowest possible test score for the final test that will earn at least the desired grade. 
+    If even a perfect score won't get the desired grade, return -1.
+    The desired grade will be given as a String of length 1, either "A", "B", "C", or "D".
+    
+"A"
+{0,70}
+Returns: -1
+Even a perfect 100 on the last test will only produce an average score of 56.66 so it is not possible 
+to earn an A.    
+
+"D"
+{100,100,100,100,100,100}
+Returns: 0
+Nice scores! Even the worst possible score of 0 will give an average of 85.7 earning a B which 
+satisfies your meager desire.
+
+"B"
+{80,80,80,73}
+Returns: 87
+An 87 added to these scores will just exactly improve your average from 78.25 to 80.
+
+"A"
+{80}
+Returns: 100
+
+
+public class Education {
+	public static int minimize(String desire, int[] tests) {
+		int sum = 0;
+		double cnt = tests.length + 1;
+
+		for (int i : tests) {
+			sum += i;
+		}
+
+		if (desire.equals("A")) {
+			if (sum / cnt >= 90.0)
+				return 0;
+			else if ((sum + 100) / cnt < 90.0)
+				return -1;
+			else {
+				return (int) ((90.0 * cnt) - sum);
+			}
+		} else if (desire.equals("B")) {
+			if (sum / cnt >= 80.0)
+				return 0;
+			else if ((sum + 100) / cnt < 80.0)
+				return -1;
+			else {
+				return (int) ((80.0 * cnt) - sum);
+			}
+		} else if (desire.equals("C")) {
+			if (sum / cnt >= 70.0)
+				return 0;
+			else if ((sum + 100) / cnt < 70.0)
+				return -1;
+			else {
+				return (int) ((70.0 * cnt) - sum);
+			}
+		} else {
+			if (sum / cnt >= 60.0)
+				return 0;
+			else if ((sum + 100) / cnt < 60.0)
+				return -1;
+			else {
+				return (int) ((60.0 * cnt) - sum);
+			}
+		}
+	}
+}

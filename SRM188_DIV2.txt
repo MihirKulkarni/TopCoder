@@ -1,0 +1,54 @@
+Problem Statement
+    
+    A magic square is a 3x3 array of numbers, such that the sum of each row, column, and diagonal are
+    all the same. For example:
+
+    8 1 6
+    3 5 7
+    4 9 2
+    
+    In this example, all rows, columns, and diagonals sum to 15.
+    You will be given a int[] representing the nine numbers of a magic square, listed left-to-right, 
+    top-to-bottom. However, one of these numbers will be replaced by a -1. Write a method to determine 
+    which number was removed. For example, if the 7 was removed from the magic square above, you would 
+    be given { 8, 1, 6, 3, 5, -1, 4, 9, 2 }, and your program should return 7.
+    The completed magic square will consist of exactly 9 distinct positive integers.
+    
+    
+{ -1, 1, 6, 3, 5, 7, 4, 9, 2 }
+Returns: 8
+The same square, but this time with the number 8 removed.
+
+{ 5, 15, 13, 19, 11, 3, 9, 7, -1 }
+Returns: 17
+The missing number is 17.
+
+
+public class MagicSquare {
+	public static int missing(int[] square) {
+		int sum1 = 0, sum2 = 0, sum3 = 0;
+		int num = 0;
+
+		for (int i = 0; i < 3; i++) {
+			if (square[i] != -1)
+				sum1 += square[i];
+		}
+		
+		for (int i = 3; i < 6; i++) {
+			if (square[i] != -1)
+				sum2 += square[i];
+		}
+		
+		for (int i = 6; i < 9; i++) {
+			if (square[i] != -1)
+				sum3 += square[i];
+		}
+		
+		if (sum1 == sum2)
+			return sum2 - sum3;
+		else if (sum1 == sum3)
+			return sum3 - sum2;
+		else
+			return sum2 - sum1;
+	}
+}    
