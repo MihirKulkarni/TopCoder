@@ -1,0 +1,46 @@
+Problem Statement
+    
+    The definition of how to multiply a string by an integer follows:
+    The empty string ("") multiplied by any integer is the empty string (""). For example: "" * 9 = ""
+    Any string multiplied by 0 is the empty string (""). For example: "Terrific" * 0 = ""
+    A non-empty string S multiplied by a positive integer k is the concatenation of k occurrences of S. 
+    For example: "Great" * 4 = "GreatGreatGreatGreat"
+    A non-empty string S multiplied by a negative integer k is the concatenation of k occurrences of 
+    the reverse of S. For example: "Great" * -4 = "taerGtaerGtaerGtaerG"
+    Your method will take a String and an int and return their product.
+    
+"wOw"
+0
+Returns: ""
+   
+"AbC"
+-3
+Returns: "CbACbACbA"
+
+"Boo"
+4
+Returns: "BooBooBooBoo"
+
+""
+50
+Returns: ""
+
+
+public class StringMult {
+	public static String times(String sFactor, int iFactor) {
+		StringBuilder str = new StringBuilder("");
+
+		if (sFactor.isEmpty() || iFactor == 0)
+			return str.toString();
+		else if (iFactor > 0) {
+			for (int i = 0; i < iFactor; i++)
+				str.append(sFactor);
+			return str.toString();
+		} else {
+			StringBuilder temp = new StringBuilder(sFactor).reverse();
+			for (int i = 0; i > iFactor; i--)
+				str.append(temp);
+			return str.toString();
+		}
+	}
+}
