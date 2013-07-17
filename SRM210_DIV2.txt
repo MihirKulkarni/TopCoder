@@ -1,0 +1,49 @@
+Problem Statement
+    
+    A common word-processing task is capitalizing the first letter of each word in a title. Write a 
+    class TitleString with a method toFirstUpperCase that takes a String title containing lowercase 
+    words separated by one or more space characters and returns a String that is identical to title 
+    except with the first character of each word capitalized.
+    
+"introduction to algorithms"
+Returns: "Introduction To Algorithms"
+
+"more than  one   space    between     words"
+Returns: "More Than  One   Space    Between     Words"
+
+"  lord of the rings   the fellowship of the ring  "
+Returns: "  Lord Of The Rings   The Fellowship Of The Ring  "
+
+"  "
+Returns: "  "
+
+"i"
+Returns: "I"
+
+""
+Returns: ""    
+
+"the king and i"
+Returns: "The King And I"
+
+
+public class TitleString {
+	public static String toFirstUpperCase(String title) {
+		StringBuilder sb = new StringBuilder();
+		boolean first = true;
+		
+		for (char c : title.toCharArray()) {
+			if (c == ' ') {
+				sb.append(c);
+				first = true;
+			} else if (first) {
+				sb.append(Character.toUpperCase(c));
+				first = false;
+			} else {
+				sb.append(c);
+			}
+		}
+		
+		return sb.toString();
+	}
+}

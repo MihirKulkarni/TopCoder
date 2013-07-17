@@ -1,0 +1,42 @@
+Problem Statement
+    
+    You have acquired a list of the math and verbal test scores from all the children in the county. 
+    Write a class Average that contains a method belowAvg that takes two int[], math and verbal, 
+    representing the math and verbal scores of all of the children in the county, and returns the 
+    number of children who have a composite score which is below average in the county.
+    The composite score is defined to be the sum of a child's math and verbal scores.
+    
+{200,250,700,700}
+{400,400,400,400}
+Returns: 2
+
+{293}
+{799}
+Returns: 0
+
+{400,400,400,400,400,400,401}
+{400,400,400,400,400,400,400}
+Returns: 6
+
+
+public class Average {
+	public static int belowAvg(int[] math, int[] verbal) {
+		int cnt = 0;
+		int[] c = new int[math.length];
+		double total = 0;
+
+		for (int i = 0; i < math.length; i++) {
+			c[i] = math[i] + verbal[i];
+			total += c[i];
+		}
+		
+		double avg = total / math.length;
+		
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] < avg)
+				cnt ++;
+		}
+		return cnt;
+	}
+}    
+

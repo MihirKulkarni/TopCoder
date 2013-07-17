@@ -1,0 +1,63 @@
+Problem Statement
+    
+    In the new boardgame Medici, you play an aristocrat in 15th-century Florence. On each turn, you 
+    gather points in three categories: fame, fortune, and dirty secrets with which you can blackmail 
+    other players. The winner is the player with the most points in his weakest category at the end 
+    of the game. For example, suppose there are three players with the following points:
+
+    NAME       FAME  FORTUNE  SECRETS
+    ---------------------------------
+    Salvestro   20      60       40
+    Giovanni    30      80       30
+    Cosimo      50      40       50
+
+    Salvestro's weakest category is Fame, in which he has 20 points. Giovanni's weakest categories 
+    are Fame and Secrets, with 30 points in both. Cosimo's weakest category is Fortune, with 40 points. 
+    Cosimo is the winner.
+    You will be given three int[]s, fame, fortune, and secrets. The points for player i are given as 
+    the i-th elements of the three int[]s. You are to return the (zero-based) index of the winning 
+    player. If there is a tie for the winning score, the game is declared a draw and replayed, in which 
+    case you should return -1.
+    
+{   0, 100, 100, 100 }
+{ 100,   0, 100,  50 }
+{  50,  50,  50, 100 }
+Returns: -1
+
+{ 1, 0 }
+{ 1, 99 }
+{ 1, 99 }
+Returns: 0
+
+{ 39, 42, 57 }
+{ 42, 39, 57 }
+{ 57, 39, 42 }
+Returns: 2
+
+
+public class Medici {
+	public static int winner(int[] fame, int[] fortune, int[] secrets) {
+		int index = 0;
+		int[] min = new int[fame.length];
+
+		for (int i = 0; i < fame.length; i++) {
+			min[i] = Math.min(Math.min(fame[i], fortune[i]), secrets[i]);
+		}
+
+		int temp = min[0];
+		boolean tied = false;
+		for (int i = 1; i < fame.length; i++) {
+			if (min[i] == temp) {
+				tied = true;
+				temp = min[i];
+			} else if (min[i] > temp) {
+				tied = false;
+				index = i;
+				temp = min[i];
+			}
+		}
+
+		if (tied == true) return -1;
+		return index;
+	}
+}    

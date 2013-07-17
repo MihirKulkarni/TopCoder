@@ -1,0 +1,26 @@
+Problem Statement
+    
+    Computers operate on binary numbers. Almost all computation is done by manipulating 0's and 1's. 
+    Thus, in order for computers to use the numbers we give them, they must convert them from base 10 
+    (what we use normally) into binary (base 2). It is sometimes useful to determine how many bits a 
+    number will take to represent, so that we can save memory. For example, if a number is smaller 
+    than 256, we can represent it with 8 bits.  A binary number's value is determined as follows: For 
+    each '1' in the binary number add 2^i (2 to the power of i), where i is the number of digits to 
+    the right of the '1'. For example, 10100 binary, is equivalent to 20 in decimal. The first 1 has 
+    4 digits to the right, so it is equivalent to 2^4 = 16. The other 1 has two digits to the right 
+    of it, so it is 2^2 = 4. 16 + 4 = 20. Another example is 1111, whose base 10 equivalent is 
+    2^3 + 2^2 + 2^1 + 2^0 = 8 + 4 + 2 + 1 = 15.  Your task is to write a method that, given an int, 
+    will determine the minimum number of bits that must be used to represent this number in binary.
+        
+32
+Returns: 6
+
+12
+Returns: 4
+
+
+public class Bits {
+	public static int minBits(int n) {
+		return Integer.toBinaryString(n).length();
+	}
+}    
