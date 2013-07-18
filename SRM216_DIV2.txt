@@ -1,0 +1,49 @@
+Problem Statement
+    
+    Bob and Doug have recently moved from Canada to the United States, and they are confused by this 
+    strange letter, "ZEE". They need your assistance. Given a String text, replace every occurrence 
+    of the word, "ZEE", with the word, "ZED", and return the result.  Note that if "ZEE" is just part 
+    of a larger word (for example, "ZEES"), it should not be altered.
+    
+
+"THE TWENTY SIXTH LETTER OF THE ALPHABET IS ZEE"
+Returns: "THE TWENTY SIXTH LETTER OF THE ALPHABET IS ZED"
+There is precisely one occurrence of "ZEE" in this line of text, so it should be replaced with "ZED".
+    
+"ZEE"
+Returns: "ZED"
+
+"SPELLING IN ENGLISH IS EZEE"
+Returns: "SPELLING IN ENGLISH IS EZEE"
+The "ZEE" at the end of this line should not be altered since it is part of a larger word.    
+
+"ZEE ZEE ZED ZEDS ZEE ZEES"
+Returns: "ZED ZED ZED ZEDS ZED ZEES"
+
+
+public class CultureShock {
+	public static String translate(String text) {
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < text.length(); i++) {
+			if (i == 0 || text.charAt(i - 1) == ' ') {
+				if (text.charAt(i) == 'Z') {
+					if (i + 1 < text.length() && text.charAt(i + 1) == 'E') {
+						if (i + 2 < text.length() && text.charAt(i + 2) == 'E') {
+							if (i + 3 == text.length()
+									|| (i + 3 < text.length() && text
+											.charAt(i + 3) == ' ')) {
+								sb.append("ZED");
+								i += 2;
+								continue;
+							}
+						}
+					}
+				}
+			}
+			sb.append(text.charAt(i));
+		}
+
+		return sb.toString();
+	}
+}

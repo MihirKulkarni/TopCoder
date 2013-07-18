@@ -1,0 +1,76 @@
+Problem Statement
+    
+The TopCoder office building is filled with very efficient people. Each of these people always parks their car in the closest (to the building) available parking space. The
+parking spaces are arranged linearly, with space number one being the closest to the building, space number two being the second closest to the building, etc.
+Given a sequence of employee arrivals and departures, determine the number of parking spaces used that day. The parking lot is empty at the beginning of the day. Names are
+case sensitive.
+For example in the sequence of events below: 
+{"Alice arrives",
+ "bob arrives",
+ "Alice departs",
+ "Charles arrives",
+ "bob departs",
+ "Charles departs"}
+
+Alice parks in space 1
+bob parks in space 2
+Alice vacates space 1
+Charles parks in space 1
+bob vacates space 2
+Charles vacates space 1
+The total number of parking spaces used is 2.
+
+{"AdminBrett arrives","lbackstrom arrives","AdminBrett departs","mike arrives",
+ "TheFaxman arrives","AdminBrett arrives","lbackstrom departs","dok arrives",
+ "AdminBrett departs","gt arrives","AdminBrett arrives","lbackstrom arrives",
+ "AdminBrett departs","jhughes arrives","jhughes departs","TheFaxman departs",
+ "MaryJoe arrives","AdminBrett arrives","AdminBrett departs","AdminBrett arrives"}
+Returns: 6
+
+
+{"SnapDragon arrives","tomek arrives","JohnDethridge arrives","ZorbaTHut arrives",
+ "snewman arrives","reid arrives","NGBronson arrives","Yarin arrives",
+ "bstanescu arrives","mathijs arrives","radeye arrives","bladerunner arrives",
+ "dgarthur arrives","venco arrives","dmwright arrives","WishingBone arrives",
+ "Eryx arrives","antimatter arrives","ChristopherH arrives","lars arrives",
+ "biggnate arrives","JanKuipers arrives","dary arrives","haha arrives","grotmol arrives",
+ "XuChuan arrives","Ryan arrives","LunaticFrindge arrives","Wasteland arrives",
+ "RunningWild arrives","hampster arrives","RalphFurmaniak arrives",
+ "kyky arrives","qubits arrives","Rustyoldman arrives","turuthok arrives",
+ "Vulpecular arrives","Eeyore arrives","wackes arrives","Ishan arrives",
+ "dimkadimon arrives","dplass arrives","Olorin arrives","TangentZ arrives",
+ "NeverMore arrives","Pops arrives","srowan arrives","tjq arrives",
+ "vorthys arrives","schveiguy arrives"}
+Returns: 50
+
+
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.Map;
+
+public class OfficeParking {
+	public static int spacesUsed(String[] events) {
+        int maxSpot = 0;
+        BitSet spots = new BitSet(events.length / 2);
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        
+        for (String str : events) {
+            String[] strings = str.split(" ");
+            if (map.containsKey(strings[0])) {
+                int spot = map.get(strings[0]);
+                spots.clear(spot);
+                map.remove(strings[0]);
+            } else {
+                int temp = spots.nextClearBit(0);
+                if (temp == maxSpot) {
+                    map.put(strings[0], maxSpot);
+                    spots.set(maxSpot++);
+                } else {
+                    map.put(strings[0], temp);
+                    spots.set(temp);
+                }
+            }
+        }
+        return maxSpot;
+    }
+}
