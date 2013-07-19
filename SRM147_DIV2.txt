@@ -34,3 +34,93 @@ public class CCipher {
 		return sb.toString();
 	}
 }
+
+----------------------------------------------------------------------------------------------------
+
+Problem Statement
+    
+    There are numMales males and numFemales females arranged in a circle. Starting from a given point, 
+    you count clockwise and remove the K'th person from the circle (where K=1 is the person at the 
+    current point, K=2 is the next person in the clockwise direction, etc...). After removing that 
+    person, the next person in the clockwise direction becomes the new starting point. After repeating 
+    this procedure numFemales times, there are no females left in the circle.
+    Given numMales, numFemales and K, your task is to return what the initial arrangement of people 
+    in the circle must have been, starting from the starting point and in clockwise order.
+    For example, if there are 5 males and 3 females and you remove every second person, your return 
+    String will be "MFMFMFMM".
+    
+5
+3
+2
+Returns: "MFMFMFMM"
+Return "MFMFMFMM". On the first round you remove the second person - "M_MFMFMM". Your new circle 
+looks like "MFMFMMM" from your new starting point. Then you remove the second person again etc.    
+
+7
+3
+1
+Returns: "FFFMMMMMMM"
+Starting from the starting point you remove the first person, then you continue and remove the next 
+first person etc. Clearly, all the females are located at the beginning. Hence return "FFFMMMMMMM"
+
+25
+25
+1000
+Returns: "MMMMMFFFFFFMFMFMMMFFMFFFFFFFFFMMMMMMMFFMFMMMFMFMMF"
+
+5
+5
+3
+Returns: "MFFMMFFMFM"
+Here we mark the removed people with '_', and the starting position with lower-case:
+Number of      | People Remaining
+Rounds         | (in initial order)
+---------------+-----------------
+ 0             | mFFMMFFMFM
+ 1             | MF_mMFFMFM
+ 2             | MF_MM_fMFM
+ 3             | MF_MM_FM_m
+ 4             | M__mM_FM_M
+ 5             | M__MM__m_M
+ 
+1
+0
+245
+Returns: "M"
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PeopleCircle {
+	public static String order(int numMales, int numFemales, int K) {
+		List<Character> list = new ArrayList<Character>();
+		int j = numFemales;
+		StringBuilder sb = new StringBuilder();
+		
+		for (int i = 0; i < numMales; i++) {
+			list.add('M');
+		}
+		
+		while (j > 0) {
+			list.add(0, 'F');
+			for (int k = 1; k < K; k++) {
+				list.add(0, list.remove(list.size() - 1));
+			}
+			j--;
+		}
+		
+		for (char ch : list) {
+			sb.append(ch);
+		}
+		return sb.toString();
+	}
+}
+
+----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
